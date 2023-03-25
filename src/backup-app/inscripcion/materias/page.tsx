@@ -16,7 +16,7 @@ export default async function Inscripcion() {
             border: "2px solid black",
           }}
         >
-          <h3>{`${item.name}(${item.code})`}</h3>
+          <h3>{`${item.name} (${item.code})`}</h3>
           <p>{item.department}</p>
           <Link href={`inscripcion/materias/${item.code}`}>Ver</Link>
         </div>

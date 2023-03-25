@@ -27,7 +27,6 @@ export default async function Subject({ params: { code } }: Props) {
     "asc",
   ]);
 
-  console.log({ orderedSubjectByDay });
   return (
     <div>
       <h1> {subject.description} </h1>
@@ -36,7 +35,6 @@ export default async function Subject({ params: { code } }: Props) {
         {Object.entries(orderedSubjectByDay).map(([_, value], key) => {
           const theory = subject.theory[value.theoryKey];
           const seminar = subject.seminar[value.seminarKey];
-          console.log(value.theoryKey, {subject});
 
           return (
             <div className={styles.box} key={key}>

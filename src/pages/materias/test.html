@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Page</title>
+    <style>
+      /* Style rules for layout */
+      .container {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      
+      header {
+        background-color: #333;
+        color: #fff;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+      }
+      
+      main {
+        flex: 1;
+        padding: 20px;
+      }
+      
+      footer {
+        background-color: #333;
+        color: #fff;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .menu-icon {
+        display: none;
+      }
+      
+      @media only screen and (max-width: 768px) {
+        /* Style rules for responsive layout */
+        header {
+          height: auto;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        
+        .menu-icon {
+          display: block;
+          font-size: 24px;
+          cursor: pointer;
+          margin-right: 20px;
+        }
+        
+        nav {
+          display: none;
+          width: 100%;
+          background-color: #333;
+          color: #fff;
+          padding: 20px;
+          box-sizing: border-box;
+        }
+        
+        nav a {
+          display: block;
+          padding: 10px;
+          color: #fff;
+          text-decoration: none;
+        }
+        
+        nav a:hover {
+          background-color: #555;
+        }
+        
+        .show-menu nav {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>My Page</h1>
+        <div class="menu-icon">&#9776;</div>
+        <nav>
+          <a href="#">Menu Item 1</a>
+          <a href="#">Menu Item 2</a>
+          <a href="#">Menu Item 3</a>
+        </nav>
+      </header>
+      <main>
+        This is the content
+      </main>
+      <footer>
+        &copy; 2023 My Page
+      </footer>
+    </div>
+    <script>
+      // JavaScript to toggle menu display on small screens
+      const menuIcon = document.querySelector('.menu-icon');
+      const nav = document.querySelector('nav');
+      menuIcon.addEventListener('click', function() {
+        nav.classList.toggle('show-menu');
+      });
+    </script>
+  </body>
+</html>
+

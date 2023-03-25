@@ -1,5 +1,6 @@
 //import "./global.css";
 import styles from "./layout.module.css";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 
 export default function RootLayout({
   children,
@@ -14,7 +15,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={styles.body}>{children}</body>
+
+      <UserProvider>
+        <body className={styles.body}>{children}</body>
+      </UserProvider>
     </html>
   );
 }

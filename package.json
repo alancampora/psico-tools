@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^2.3.1",
+    "@chakra-ui/icons": "^2.0.17",
     "@chakra-ui/react": "^2.5.2",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@fontsource/merriweather": "^4.5.14",
     "@types/cheerio": "^0.22.31",
     "@types/lodash": "^4.14.191",
     "@types/node": "18.15.3",

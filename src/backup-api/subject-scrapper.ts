@@ -59,12 +59,7 @@ export class SubjectsScrapper {
     return !!element.length;
   }
 
-  async _formatOneSubjectData(
-    $: any,
-    url: string,
-    query: string,
-    courseType: string
-  ) {
+  async _formatOneSubjectData($: any, query: string, courseType: string) {
     const element = $(query);
     const alternativesSchedule = element.find("tbody tr");
     const [_, ...alternativesScheduleData] = alternativesSchedule;
@@ -79,8 +74,8 @@ export class SubjectsScrapper {
           const keysTheorySeminar = toNormalForm(
             $(item).find("td:nth-child(8)").text()
           ).replace(/\s/g, "");
-          const firstKey = keysTheorySeminar.split("-")[0];
-          const secondKey = keysTheorySeminar.split("-")[1];
+          const firstKey = keysTheorySeminar.split("-")[0]?.toUpperCase();
+          const secondKey = keysTheorySeminar.split("-")[1]?.toUpperCase();
 
           if (isTheoryKey(firstKey)) {
             theoryKey = firstKey;
@@ -91,31 +86,29 @@ export class SubjectsScrapper {
           }
         }
 
+        const mainKey = $(item)
+          .find("td:nth-child(1)")
+          .text()
+          .replace(/\s/g, "")
+          .toUpperCase();
+
         return {
           ...acum,
-          [toNormalForm($(item).find("td:nth-child(1)").text()).replace(
-            /\s/g,
-            ""
-          )]: {
-            key: toNormalForm($(item).find("td:nth-child(1)").text()).replace(
-              /\s/g,
-              ""
-            ),
-            day: toNormalForm($(item).find("td:nth-child(2)").text()),
-            start: toNormalForm($(item).find("td:nth-child(3)").text()).trim(),
-            end: toNormalForm($(item).find("td:nth-child(4)").text()).trim(),
-            type: toNormalForm($(item).find("td:nth-child(5)").text()),
-            teacher: toNormalForm($(item).find("td:nth-child(6)").text()),
-            slots: toNormalForm($(item).find("td:nth-child(7)").text()).trim(),
+          [mainKey]: {
+            key: mainKey,
+            day: $(item).find("td:nth-child(2)").text(),
+            start: $(item).find("td:nth-child(3)").text().trim(),
+            end: $(item).find("td:nth-child(4)").text().trim(),
+            type: $(item).find("td:nth-child(5)").text(),
+            teacher: $(item).find("td:nth-child(6)").text(),
+            slots: $(item).find("td:nth-child(7)").text().trim(),
             theoryKey,
             seminarKey,
-            classroom: toNormalForm($(item).find("td:nth-child(9)").text()),
-            notes: toNormalForm($(item).find("td:nth-child(10)").text()),
+            classroom: $(item).find("td:nth-child(9)").text(),
+            notes: $(item).find("td:nth-child(10)").text(),
           },
         };
       }, {});
-
-    console.log({ formattedData });
 
     return formattedData;
   }
@@ -133,7 +126,6 @@ export class SubjectsScrapper {
 
     const theoryData = await this._formatOneSubjectData(
       $,
-      url,
       ".table_tabs:nth-child(1)",
       COURSE_TYPE.THEORY
     );
@@ -141,7 +133,6 @@ export class SubjectsScrapper {
     if (hasOnlyTwoSpaces) {
       const practicalData = await this._formatOneSubjectData(
         $,
-        url,
         ".table_tabs:nth-child(3)",
         COURSE_TYPE.PRACTICAL
       );
@@ -156,13 +147,11 @@ export class SubjectsScrapper {
 
     const seminarData = await this._formatOneSubjectData(
       $,
-      url,
       ".table_tabs:nth-child(3)",
       COURSE_TYPE.SEMINAR
     );
     const practicalData = await this._formatOneSubjectData(
       $,
-      url,
       ".table_tabs:nth-child(5)",
       COURSE_TYPE.PRACTICAL
     );
