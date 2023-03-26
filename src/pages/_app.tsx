@@ -13,6 +13,8 @@ const theme = extendTheme({
   },
 });
 
+console.log('LOG', process.env.AUTH0_ISSUER_BASE_URL);
+
 export default function App({ Component, pageProps }: any) {
   return (
     <UserProvider>
