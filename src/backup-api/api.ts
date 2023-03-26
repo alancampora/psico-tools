@@ -15,6 +15,7 @@ const api = {
         "http://academica.psi.uba.ar/Psi/Ope154_.php"
       );
 
+      console.log({result});
       return result;
     },
     one: async (url: string) => {
