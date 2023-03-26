@@ -13,12 +13,14 @@ const theme = extendTheme({
   },
 });
 
-export default function App({ Component, pageProps }:any) {
+export default function App({ Component, pageProps }: any) {
   return (
-    <UserProvider loginUrl="/api/auth/login" profileUrl="/api/auth/me">
+    <UserProvider
+      loginUrl={`${process.env.MAIN_URL}/api/auth/login`}
+      profileUrl={`${process.env.MAIN_URL}/api/auth/me`}
+    >
       <ChakraProvider theme={theme}>
         <Setup>
-
           <Component {...pageProps} />
         </Setup>
       </ChakraProvider>
