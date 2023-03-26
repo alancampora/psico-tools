@@ -8,6 +8,8 @@ import {
   RATING_DETAILS_INPUT,
   SECOND_PERIOD,
   SEND,
+  SUBJECT,
+  SUBJECT_DETAILS,
   SUMMER,
   WINTER,
 } from "../../../strings";
@@ -27,13 +29,13 @@ import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
 
-export default function Recommendation() {
+export default function Recommendation({ user }) {
   const [rating, setRating] = useState(0);
   const [recommendation, setRecommendation] = useState("");
   const [period, setPeriod] = useState("1er cuatrimestre");
   const [subjects, setSubjects] = useState([]);
   const [isLoadingSubjects, setIsLoadingSubjects] = useState(true);
-  const [selectedSubject, setSelectedSubject] = useState("");
+  const [selectedSubject, setSelectedSubject] = useState({});
 
   const toast = useToast();
 
@@ -51,25 +53,40 @@ export default function Recommendation() {
     fetchSubjects();
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const newRecommendation = {
       rating,
-      recommendation,
+      text: recommendation,
       period,
-      subject: selectedSubject,
+      subject: { ...selectedSubject },
+      user,
+      state: "DRAFT",
     };
     console.log(newRecommendation);
     setRating(0);
     setRecommendation("");
-    setPeriod("1er cuatrimestre");
-    setSelectedSubject("");
-    toast({
-      title: "Recommendation sent",
-      description: "Thank you for your recommendation!",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
+    setPeriod(FIRST_PERIOD);
+    setSelectedSubject(subjects[0]);
+
+    try {
+      await axios.post("/api/recommendation", newRecommendation);
+      toast({
+        title: "Recommendation sent",
+        description: "Thank you for your recommendation!",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (e) {
+      console.log(e);
+      toast({
+        title: "Su recomendacion no ha sigo guardada",
+        description: "Comuniquese con psico-tools@gmail.com",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
@@ -78,12 +95,16 @@ export default function Recommendation() {
         {NEW_RECOMMENDATION}
       </Heading>
 
-      <FormControl id="subject" mb={4}>
-        <FormLabel>Subject</FormLabel>
+      <FormControl id="subject" mb={8}>
+        <FormLabel>{SUBJECT}</FormLabel>
         {!isLoadingSubjects && (
           <Select
-            value={selectedSubject}
-            onChange={(event) => setSelectedSubject(event.target.value)}
+            value={selectedSubject.code}
+            onChange={(event) =>
+              setSelectedSubject(
+                subjects.find((s) => s.code === event.target.value)
+              )
+            }
           >
             {subjects.map((subject) => (
               <option key={subject.code} value={subject.code}>
@@ -92,9 +113,7 @@ export default function Recommendation() {
             ))}
           </Select>
         )}
-        <FormHelperText>
-          Select the subject you want to recommend
-        </FormHelperText>
+        <FormHelperText>{SUBJECT_DETAILS}</FormHelperText>
       </FormControl>
 
       <FormControl id="rating" mb={8}>
