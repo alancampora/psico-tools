@@ -15,9 +15,10 @@ const theme = extendTheme({
 
 export default function App({ Component, pageProps }:any) {
   return (
-    <UserProvider>
+    <UserProvider loginUrl="/api/auth/login" profileUrl="/api/auth/me">
       <ChakraProvider theme={theme}>
         <Setup>
+
           <Component {...pageProps} />
         </Setup>
       </ChakraProvider>
