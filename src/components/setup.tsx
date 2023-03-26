@@ -2,8 +2,9 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
 import { Layout } from "./layout";
 import { LOGOUT } from "../strings";
+import Link from "next/link";
 
-export function Setup({ children }) {
+export function Setup({ children }:any) {
   const router = useRouter();
   const { user, error, isLoading } = useUser();
 
@@ -51,5 +52,5 @@ export function Setup({ children }) {
     );
   }
 
-  return <a href="/api/auth/login">Login</a>;
+  return <Link href="/api/auth/login">Login</Link>;
 }

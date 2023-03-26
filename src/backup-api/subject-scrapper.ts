@@ -10,7 +10,7 @@ function isTheoryKey(str: string) {
   return str.includes("I") || str.includes("V") || str.includes("X");
 }
 
-async function getData(url) {
+async function getData(url: string) {
   const response = await axios.request({
     method: "GET",
     url,
@@ -35,6 +35,7 @@ export class SubjectsScrapper {
     const $ = cheerio.load(html);
 
     const subjects = $("#PS table tbody tr");
+    //@ts-ignore
     const [_, ...subjectsData] = subjects;
 
     const formattedSubjects = $(subjectsData)

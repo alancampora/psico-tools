@@ -29,13 +29,17 @@ import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import axios from "axios";
 
-export default function Recommendation({ user }) {
+export default function Recommendation({ user }: any) {
   const [rating, setRating] = useState(0);
   const [recommendation, setRecommendation] = useState("");
   const [period, setPeriod] = useState("1er cuatrimestre");
   const [subjects, setSubjects] = useState([]);
   const [isLoadingSubjects, setIsLoadingSubjects] = useState(true);
-  const [selectedSubject, setSelectedSubject] = useState({});
+  const [selectedSubject, setSelectedSubject] = useState({
+    name: "",
+    code: "",
+    departament: "",
+  });
 
   const toast = useToast();
 
@@ -99,16 +103,21 @@ export default function Recommendation({ user }) {
         <FormLabel>{SUBJECT}</FormLabel>
         {!isLoadingSubjects && (
           <Select
-            value={selectedSubject.code}
+            value={selectedSubject!.code}
             onChange={(event) =>
               setSelectedSubject(
-                subjects.find((s) => s.code === event.target.value)
+                // @ts-ignore
+                subjects!.find((s: any) => s!.code === event.target.value)
               )
             }
           >
             {subjects.map((subject) => (
+              // @ts-ignore
               <option key={subject.code} value={subject.code}>
-                {`(${subject.code}) ${subject.name} ${subject.department}`}
+                {
+                  // @ts-ignore
+                  `(${subject!.code}) ${subject!.name} ${subject!.department}`
+                }
               </option>
             ))}
           </Select>

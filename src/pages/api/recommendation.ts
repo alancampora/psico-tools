@@ -34,8 +34,8 @@ export async function updateRecommendation(req: any, res: any) {
 export async function deleteRecommendation(req: any, res: any) {
   const { id } = req.body;
 
+  // @ts-ignore
   const recommendations = await Recommendation.find({ _id: id })
-    .remove()
     .exec();
 
   return res.json(recommendations);
@@ -62,7 +62,7 @@ export async function createRecommendation(req: any, res: any) {
     });
   } catch (error) {
     return res.json({
-      message: new Error(error).message,
+      message: error,
       success: false,
     });
   }

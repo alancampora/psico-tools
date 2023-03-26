@@ -12,7 +12,13 @@ import {
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { CLOSE, LOGOUT, TITLE } from "../strings";
 
-export function Layout({ children, userName, onLogout, userAvatar, routes }) {
+export function Layout({
+  children,
+  userName,
+  onLogout,
+  userAvatar,
+  routes,
+}: any) {
   const { isOpen, onToggle } = useDisclosure();
 
   return (
@@ -38,15 +44,16 @@ export function Layout({ children, userName, onLogout, userAvatar, routes }) {
   );
 }
 
-function Menu({ onLogout, routes }) {
+function Menu({ onLogout, routes }: any) {
   return (
     <HStack
       display={{ base: "none", md: "flex" }}
       justify="center"
       bg="gray.200"
     >
-      {routes.map((route) => (
+      {routes.map((route:any) => (
         <Box
+          key={route.label}
           as="button"
           h={10}
           p={2.5}
@@ -61,7 +68,7 @@ function Menu({ onLogout, routes }) {
   );
 }
 
-function Header({ onMenuClick, userName, userAvatar }) {
+function Header({ onMenuClick, userName, userAvatar }: any) {
   return (
     <Flex
       as="header"
@@ -105,7 +112,7 @@ function Footer() {
   );
 }
 
-function MobileMenu({ isOpen, onMenuClose, onLogout, routes }) {
+function MobileMenu({ isOpen, onMenuClose, onLogout, routes }: any) {
   return (
     <Box
       bg="purple.900"
@@ -121,10 +128,12 @@ function MobileMenu({ isOpen, onMenuClose, onLogout, routes }) {
       py="8"
     >
       <Stack spacing="4">
-        {routes.map((route) => (
-          <Button variant="outline" onClick={route.onClick}>
-            {route.label}
-          </Button>
+        {routes.map((route: any) => (
+          <div key={route.label}>
+            <Button variant="outline" onClick={route.onClick}>
+              {route.label}
+            </Button>
+          </div>
         ))}
         <Button variant="outline" onClick={onMenuClose}>
           {CLOSE}

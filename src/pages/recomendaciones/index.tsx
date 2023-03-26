@@ -2,7 +2,7 @@ import { SUBJECT_RECOMMENDATIONS } from "@/strings";
 import { Flex, Heading, Text, Avatar, Box, Badge } from "@chakra-ui/react";
 import useSWR from "swr";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url:string) => fetch(url).then((res) => res.json());
 
 const Recommendations = () => {
   const { data: recommendationsData, error } = useSWR(
@@ -22,7 +22,7 @@ const Recommendations = () => {
       {!recommendationsData ? (
         <Text>Loading recommendations...</Text>
       ) : (
-        recommendationsData.map((recommendation) => (
+        recommendationsData.map((recommendation:any) => (
           <Box
             key={recommendation.id}
             w="100%"

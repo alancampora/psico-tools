@@ -1,5 +1,6 @@
 'use client'
 import { useUser } from "@auth0/nextjs-auth0/client";
+import Link from "next/link";
 
 export default async function Materias() {
   const { user, error, isLoading } = useUser();
@@ -12,10 +13,10 @@ export default async function Materias() {
   if (user) {
     return (
       <div>
-        Welcome {user.name}! <a href="/api/auth/logout">Logout</a>
+        Welcome {user.name}! <Link href="/api/auth/logout">Logout</Link>
       </div>
     );
   }
 
-  return <a href="/api/auth/login">Login</a>;
+  return <Link href="/api/auth/login">Login</Link>;
 }

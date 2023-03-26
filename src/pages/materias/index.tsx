@@ -1,6 +1,6 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
-const Dashboard = ({ user }) => {
+const Dashboard = ({ user }: any) => {
   return <div>Hello {user.name}</div>;
 };
 
