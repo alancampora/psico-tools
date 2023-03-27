@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { Layout } from "./layout";
 import { LOGOUT } from "../strings";
 import Link from "next/link";
+import Welcome from "../components/welcome";
 
 export function Setup({ children }: any) {
   const router = useRouter();
@@ -53,5 +54,5 @@ export function Setup({ children }: any) {
     );
   }
 
-  return <Link href="/api/auth/login">Login</Link>;
+  return <Welcome />;
 }
