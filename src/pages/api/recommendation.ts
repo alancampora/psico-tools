@@ -35,13 +35,12 @@ export async function deleteRecommendation(req: any, res: any) {
   const { id } = req.body;
 
   // @ts-ignore
-  const recommendations = await Recommendation.find({ _id: id })
-    .exec();
+  const recommendations = await Recommendation.find({ _id: id }).exec();
 
   return res.json(recommendations);
 }
 
-export async function getRecommendations(_: any, res: any) {
+export async function getRecommendations(req: any, res: any) {
   const recommendations = await Recommendation.find({});
 
   return res.json(recommendations);
@@ -49,10 +48,9 @@ export async function getRecommendations(_: any, res: any) {
 
 export async function createRecommendation(req: any, res: any) {
   try {
-
     const recommendation = new Recommendation(req.body);
 
-    console.log({recommendation});
+    console.log({ recommendation });
 
     await recommendation.save();
 

@@ -1,4 +1,5 @@
 import {
+  ALL_YEAR,
   FIRST_PERIOD,
   NEW_RECOMMENDATION,
   PERIOD,
@@ -12,6 +13,7 @@ import {
   SUBJECT_DETAILS,
   SUMMER,
   WINTER,
+  YEAR,
 } from "../../../strings";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import {
@@ -35,6 +37,7 @@ export default function Recommendation({ user }: any) {
   const [period, setPeriod] = useState("1er cuatrimestre");
   const [subjects, setSubjects] = useState([]);
   const [isLoadingSubjects, setIsLoadingSubjects] = useState(true);
+  const [selectedYear, setSelectedYear] = useState("2023");
   const [selectedSubject, setSelectedSubject] = useState({
     name: "",
     code: "",
@@ -47,8 +50,8 @@ export default function Recommendation({ user }: any) {
     const fetchSubjects = async () => {
       try {
         const response = await axios.get("/api/subject");
-        console.log({ response });
         setSubjects(response.data);
+        setSelectedSubject(response.data[0]);
         setIsLoadingSubjects(false);
       } catch (error) {
         console.log(error);
@@ -75,8 +78,8 @@ export default function Recommendation({ user }: any) {
     try {
       await axios.post("/api/recommendation", newRecommendation);
       toast({
-        title: "Recommendation sent",
-        description: "Thank you for your recommendation!",
+        title: "Su recomendacion no ha sigo guardada",
+        description: "Gracias",
         status: "success",
         duration: 3000,
         isClosable: true,
@@ -148,6 +151,19 @@ export default function Recommendation({ user }: any) {
         <FormHelperText>{RATING_DETAILS}</FormHelperText>
       </FormControl>
 
+      <FormControl id="year" mb={8}>
+        <FormLabel>{YEAR}</FormLabel>
+        <Select
+          value={selectedYear}
+          onChange={(event) => setSelectedYear(event.target.value)}
+        >
+          <option value="2020">{"2020"}</option>
+          <option value="2021">{"2021"}</option>
+          <option value="2022">{"2022"}</option>
+          <option value="2023">{"2023"}</option>
+        </Select>
+      </FormControl>
+
       <FormControl id="period" mb={8}>
         <FormLabel>{PERIOD}</FormLabel>
         <Select
@@ -156,6 +172,7 @@ export default function Recommendation({ user }: any) {
         >
           <option value={FIRST_PERIOD}>{FIRST_PERIOD}</option>
           <option value={SECOND_PERIOD}>{SECOND_PERIOD}</option>
+          <option value={ALL_YEAR}>{ALL_YEAR}</option>
           <option value={WINTER}>{WINTER}</option>
           <option value={SUMMER}>{SUMMER}</option>
         </Select>

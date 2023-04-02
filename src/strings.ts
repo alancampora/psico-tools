@@ -16,3 +16,7 @@ export const PERIOD_DETAILS="Seleccione el cuatrimestre en el que hizo la materi
 export const SUBJECT_DETAILS="Seleccione la materia que quiere evaluar"
 export const SUBJECT="Materia"
 export const SUBJECT_RECOMMENDATIONS="Recomendaciones de materias!"
+export const LOADING = "Cargando..."
+export const LOADING_ERROR = "Oops, hubo un error!"
+export const ALL_YEAR = "Anual"
+export const YEAR = "Ano de cursada"

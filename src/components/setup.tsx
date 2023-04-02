@@ -9,7 +9,6 @@ export function Setup({ children }: any) {
   const router = useRouter();
   const { user, error, isLoading } = useUser();
 
-  console.log("LOG", process.env.AUTH0_ISSUER_BASE_URL);
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
