@@ -1,4 +1,4 @@
-import connectMongo from "../../data/connectMongo";
+import connectMongo from "../../data/connect-mongo";
 import Recommendation from "../../data/models/recommendation";
 
 export default async function handler(req: any, res: any) {

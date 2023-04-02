@@ -8,6 +8,7 @@ import {
   Badge,
   Button,
 } from "@chakra-ui/react";
+import recommendationApi from "@api/recommendation";
 import { EditIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
 import { FaBookmark } from "react-icons/fa";
@@ -19,8 +20,6 @@ const FeedbackPage = ({ recommendations }: any) => {
   const [filteredFeedback, setFilteredFeedback] = useState([]);
 
   useEffect(() => {
-    // Filter feedback based on search term and selected rating
-    //
     const filtered = recommendations.filter((item: any) => {
       const matchesSearchTerm = item.subject.name
         .toLowerCase()
@@ -105,16 +104,11 @@ const FeedbackPage = ({ recommendations }: any) => {
 };
 
 export async function getStaticProps() {
-  const protocol =
-    process.env.VERCEL_ENV === "production" ? "https://" : "http://";
-  const url = `${protocol}${process.env.VERCEL_URL}/api/recommendation`;
+  const data: any = await recommendationApi.all();
 
-  console.log({ url });
-
-  const data = await fetch(url);
-  const recommendations = await data.json();
-
-  console.log({ recommendations });
+  const recommendations = data.map((doc: any) =>
+    doc.toObject({ flattenMaps: true, getters: true })
+  );
 
   return {
     props: {

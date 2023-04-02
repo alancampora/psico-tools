@@ -1,4 +1,4 @@
-import connectMongo from "../../data/connectMongo";
+import connectMongo from "../../data/connect-mongo";
 import Subject from "../../data/models/subject";
 
 export default async function handler(req: any, res: any) {
@@ -25,7 +25,6 @@ export default async function handler(req: any, res: any) {
 
 async function getSubjects(_: any, res: any) {
   const subjects = await Subject.find({});
-  console.log({ subjects });
 
   const result = await res.json(subjects);
 
