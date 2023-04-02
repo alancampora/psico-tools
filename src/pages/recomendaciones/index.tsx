@@ -12,7 +12,7 @@ import { EditIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
 import { FaBookmark } from "react-icons/fa";
 
-const FeedbackPage = ({recommendations}:any) => {
+const FeedbackPage = ({ recommendations }: any) => {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRating, setSelectedRating] = useState("All");
@@ -21,7 +21,7 @@ const FeedbackPage = ({recommendations}:any) => {
   useEffect(() => {
     // Filter feedback based on search term and selected rating
     //
-    const filtered = recommendations.filter((item:any) => {
+    const filtered = recommendations.filter((item: any) => {
       const matchesSearchTerm = item.subject.name
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
@@ -39,7 +39,7 @@ const FeedbackPage = ({recommendations}:any) => {
     });
   };
 
-  const handleSaveForLater = (id:string) => {
+  const handleSaveForLater = (id: string) => {
     // Logic for saving review for later
     console.log(`Saving review ${id} for later`);
   };
@@ -78,7 +78,7 @@ const FeedbackPage = ({recommendations}:any) => {
           <option value="1">1 star</option>
         </Select>
       </Flex>
-      {filteredFeedback.map((item:any) => (
+      {filteredFeedback.map((item: any) => (
         <Box key={item.id} p={4} bg="gray.100" mb={4} alignItems="center">
           <Flex align="center" justify="space-between" mb={2} columnGap="10px">
             <Text fontSize="xl" fontWeight="bold">
@@ -105,7 +105,12 @@ const FeedbackPage = ({recommendations}:any) => {
 };
 
 export async function getStaticProps() {
-  const data = await fetch(`${process.env.VERCEL_URL}/api/recommendation`);
+  let protocol =
+    process.env.VERCEL_ENV === "production" ? "https://" : "http://";
+
+  const data = await fetch(
+    `${protocol}${process.env.VERCEL_URL}/api/recommendation`
+  );
   const recommendations = await data.json();
 
   console.log({ recommendations });
