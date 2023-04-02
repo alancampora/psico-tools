@@ -105,12 +105,13 @@ const FeedbackPage = ({ recommendations }: any) => {
 };
 
 export async function getStaticProps() {
-  let protocol =
+  const protocol =
     process.env.VERCEL_ENV === "production" ? "https://" : "http://";
+  const url = `${protocol}${process.env.VERCEL_URL}/api/recommendation`;
 
-  const data = await fetch(
-    `${protocol}${process.env.VERCEL_URL}/api/recommendation`
-  );
+  console.log({ url });
+
+  const data = await fetch(url);
   const recommendations = await data.json();
 
   console.log({ recommendations });
